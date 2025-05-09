@@ -1,58 +1,84 @@
 {
-  "name": "n8n-nodes-<...>",
-  "version": "0.1.0",
-  "description": "",
-  "keywords": [
-    "n8n-community-node-package"
-  ],
-  "license": "MIT",
-  "homepage": "",
-  "author": {
-    "name": "",
-    "email": ""
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
-  },
-  "engines": {
-    "node": ">=18.10",
-    "pnpm": ">=9.1"
-  },
-  "packageManager": "pnpm@9.1.4",
-  "main": "index.js",
-  "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "build": "tsc && gulp build:icons",
-    "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json"
-  },
-  "files": [
-    "dist"
-  ],
-  "n8n": {
-    "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
+    "name": "@justedave0/n8n-nodes-twitch",
+    "version": "1.0.0",
+    "description": "n8n node for Twitch: Execute workflows on stream start, stream end, and new follows.",
+    "keywords": [
+        "n8n",
+        "n8n-node",
+        "n8n-nodes",
+        "node",
+        "twitch",
+        "streaming",
+        "typescript",
+        "n8n-community-node-package"
     ],
-    "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
-    ]
-  },
-  "devDependencies": {
-    "@typescript-eslint/parser": "^7.15.0",
-    "eslint": "^8.56.0",
-    "eslint-plugin-n8n-nodes-base": "^1.16.1",
-    "gulp": "^4.0.2",
-    "prettier": "^3.3.2",
-    "typescript": "^5.5.3"
-  },
-  "peerDependencies": {
-    "n8n-workflow": "*"
-  }
+    "license": "GPL-3.0",
+    "homepage": "https://github.com/justeDave0/n8n-nodes-twitch#readme",
+    "bugs": {
+        "url": "https://github.com/justeDave0/n8n-nodes-twitch/issues"
+    },
+    "author": {
+        "name": "justeDave0",
+        "email": "info@justedave.tv"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/justeDave0/n8n-nodes-twitch.git"
+    },
+    "main": "index.js",
+    "scripts": {
+        "dev": "npm run watch",
+        "build": "tsc && gulp",
+        "lint": "tslint -p tsconfig.json -c tslint.json",
+        "lintfix": "tslint --fix -p tsconfig.json -c tslint.json",
+        "nodelinter": "nodelinter",
+        "watch": "tsc --watch",
+        "test": "jest",
+        "start": "pnpm build && docker restart n8n-dev && docker logs n8n-dev -f"
+    },
+    "files": [
+        "dist"
+    ],
+    "n8n": {
+        "credentials": [
+            "dist/credentials/TwitchApi.credentials.js"
+        ],
+        "nodes": [
+            "dist/nodes/Twitch/TwitchTrigger.node.js"
+        ]
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.6",
+        "@types/jest": "^26.0.13",
+        "@types/node": "^14.17.27",
+        "@types/request-promise-native": "~1.0.15",
+        "gulp": "^4.0.0",
+        "jest": "^26.4.2",
+        "n8n-workflow": "~0.98.0",
+        "nodelinter": "^0.1.9",
+        "ts-jest": "^26.3.0",
+        "tslint": "^6.1.2",
+        "typescript": "~4.3.5"
+    },
+    "dependencies": {
+        "n8n-core": "~0.116.0",
+        "sqlite3": "^5.1.7"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.tsx?$": "ts-jest"
+        },
+        "testURL": "http://localhost/",
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+        "testPathIgnorePatterns": [
+            "/dist/",
+            "/node_modules/"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "json"
+        ]
+    }
 }
